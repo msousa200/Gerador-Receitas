@@ -117,20 +117,20 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="flex justify-center overflow-x-auto">
             <div className="stats stats-horizontal shadow-2xl bg-base-200">
-              <div className="stat place-items-center py-4 px-6">
-                <div className="stat-title text-xs">Receitas Geradas</div>
-                <div className="stat-value text-primary text-2xl">10K+</div>
-                <div className="stat-desc text-[10px]">Com IA Groq</div>
+              <div className="stat place-items-center py-2 px-3 md:py-4 md:px-6">
+                <div className="stat-title text-[10px] md:text-xs">Receitas Geradas</div>
+                <div className="stat-value text-primary text-lg md:text-2xl">10K+</div>
+                <div className="stat-desc text-[8px] md:text-[10px]">Com IA Groq</div>
               </div>
-              <div className="stat place-items-center py-4 px-6">
-                <div className="stat-title text-xs">Ingredientes</div>
-                <div className="stat-value text-secondary text-2xl">500+</div>
-                <div className="stat-desc text-[10px]">No banco de dados</div>
+              <div className="stat place-items-center py-2 px-3 md:py-4 md:px-6">
+                <div className="stat-title text-[10px] md:text-xs">Ingredientes</div>
+                <div className="stat-value text-secondary text-lg md:text-2xl">500+</div>
+                <div className="stat-desc text-[8px] md:text-[10px]">No banco de dados</div>
               </div>
-              <div className="stat place-items-center py-4 px-6">
-                <div className="stat-title text-xs">Tempo Médio</div>
-                <div className="stat-value text-accent text-2xl">2s</div>
-                <div className="stat-desc text-[10px]">Para gerar receita</div>
+              <div className="stat place-items-center py-2 px-3 md:py-4 md:px-6">
+                <div className="stat-title text-[10px] md:text-xs">Tempo Médio</div>
+                <div className="stat-value text-accent text-lg md:text-2xl">2s</div>
+                <div className="stat-desc text-[8px] md:text-[10px]">Para gerar receita</div>
               </div>
             </div>
           </div>
