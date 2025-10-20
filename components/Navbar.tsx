@@ -14,6 +14,17 @@ export default function Navbar() {
 
   useEffect(() => {
     checkUser();
+    
+    // Escutar mudanças de autenticação
+    const supabase = createClient();
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   const checkUser = async () => {
@@ -91,7 +102,7 @@ export default function Navbar() {
             </li>
           </ul>
         </div>
-        <Link href="/" className="btn btn-ghost text-lg gap-2 hover:scale-105 transition-transform">
+        <Link href="/" className="flex items-center text-lg gap-2 px-2">
           <span className="text-2xl">🍳</span>
           <span className="hidden md:inline bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent font-bold">
             Gerador de Receitas

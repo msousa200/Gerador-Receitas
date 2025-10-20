@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Gerador de Receitas - O que vais comer hoje?",
   description: "Descobre receitas aleatórias ou procura por ingredientes. Guarda as tuas favoritas!",
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({

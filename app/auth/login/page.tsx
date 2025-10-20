@@ -132,12 +132,12 @@ export default function LoginPage() {
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Email</span>
+                <span className="label-text font-semibold md:w-24">Email</span>
               </label>
               <input
                 type="email"
                 placeholder="teu@email.com"
-                className="input input-bordered"
+                className="input input-bordered input-lg focus:input-primary md:ml-4"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -146,30 +146,39 @@ export default function LoginPage() {
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text font-semibold md:w-24">Password</span>
               </label>
               <input
                 type="password"
                 placeholder="••••••••"
-                className="input input-bordered"
+                className="input input-bordered input-lg focus:input-primary md:ml-4"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
               />
+              <label className="label">
+                <span className="label-text-alt">Mínimo 6 caracteres</span>
+              </label>
             </div>
 
             <button
               type="submit"
-              className="btn btn-primary w-full"
+              className="btn btn-primary btn-lg w-full"
               disabled={loading}
             >
               {loading ? (
-                <span className="loading loading-spinner"></span>
+                <span className="loading loading-spinner loading-md"></span>
               ) : isSignUp ? (
-                "Criar Conta"
+                <>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
+                  Criar Conta
+                </>
               ) : (
-                "Entrar"
+                <>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" /></svg>
+                  Entrar
+                </>
               )}
             </button>
           </form>
@@ -178,7 +187,7 @@ export default function LoginPage() {
 
           <button
             onClick={handleGoogleLogin}
-            className="btn btn-outline w-full gap-2"
+            className="btn btn-outline btn-lg w-full gap-2"
             disabled={loading}
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -187,7 +196,11 @@ export default function LoginPage() {
               <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
               <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
             </svg>
-            {loading ? "A carregar..." : "Continuar com Google"}
+            {loading ? (
+              <span className="loading loading-spinner loading-sm"></span>
+            ) : (
+              "Continuar com Google"
+            )}
           </button>
 
           <button

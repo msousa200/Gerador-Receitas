@@ -33,8 +33,8 @@ Uma aplicação web moderna para descobrir, criar e guardar receitas. Nunca mais
 
 ### 1. Clone o repositório
 ```bash
-git clone <seu-repositorio>
-cd Gerador_Receitas
+git clone https://github.com/msousa200/Gerador-Receitas.git
+cd Gerador-Receitas
 ```
 
 ### 2. Instale as dependências
@@ -85,17 +85,17 @@ npm start
 3. Adiciona as variáveis de ambiente no painel da Vercel
 4. Deploy automático!
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/YOUR_REPO)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/msousa200/Gerador-Receitas)
 
 ## 📁 Estrutura do Projeto
 
 ```
-Gerador_Receitas/
+Gerador-Receitas/
 ├── app/
 │   ├── api/              # API Routes
-│   │   ├── generate/     # Gerar receitas com IA
-│   │   └── recipes/      # CRUD de receitas
+│   │   └── generate/     # Gerar receitas com IA
 │   ├── auth/             # Páginas de autenticação
+│   │   └── login/        # Login e Sign Up
 │   ├── buscar/           # Busca por ingredientes
 │   ├── criar/            # Criar receita
 │   ├── favoritos/        # Favoritos do utilizador
@@ -111,9 +111,13 @@ Gerador_Receitas/
 │   └── database.ts       # Tipos TypeScript
 ├── supabase/
 │   └── schema.sql        # Schema da base de dados
+├── public/
+│   └── favicon.svg       # Ícone do site
 ├── package.json
 ├── tsconfig.json
-└── next.config.ts
+├── next.config.ts
+├── README.md             # Este ficheiro
+└── SETUP.md              # Guia detalhado de configuração
 ```
 
 ## 🎨 Temas DaisyUI Disponíveis
@@ -130,19 +134,19 @@ O projeto vem configurado com vários temas:
 ## 🔐 Autenticação
 
 A autenticação é gerida pelo Supabase Auth. Os utilizadores podem:
-- Criar conta com email/password
-- Fazer login
-- Reset de password
-- OAuth (opcional)
+- ✅ Criar conta com email/password (com confirmação por email)
+- ✅ Fazer login com email/password
+- ✅ Login com Google OAuth (opcional, requer configuração)
+
+Para configurar o Google OAuth, consulta o ficheiro `SETUP.md`.
 
 ## 📊 Base de Dados
 
-O schema inclui 3 tabelas principais:
-- `recipes`: Receitas públicas (incluindo geradas por IA)
-- `user_recipes`: Receitas criadas pelos utilizadores
-- `favorites`: Favoritos dos utilizadores
+O schema inclui as seguintes tabelas:
+- `user_recipes`: Receitas criadas pelos utilizadores (incluindo favoritos de IA)
+  - Suporta tanto receitas personalizadas como receitas geradas por IA que foram guardadas
 
-Todas as tabelas têm Row Level Security (RLS) ativado.
+Todas as tabelas têm Row Level Security (RLS) ativado para proteger os dados dos utilizadores.
 
 ## 🤖 Integração com IA
 
@@ -153,17 +157,19 @@ A aplicação usa o Groq para gerar receitas. O Groq oferece:
 
 ## 📝 Funcionalidades Futuras
 
+- [ ] Sistema de categorias e tags
 - [ ] Filtros avançados (tempo, dificuldade)
 - [ ] Avaliações e comentários
 - [ ] Partilha de receitas
-- [ ] Lista de compras
-- [ ] Modo offline
+- [ ] Lista de compras automática
+- [ ] Modo offline (PWA)
 - [ ] Conversão de unidades
 - [ ] Tradução multi-idioma
+- [ ] Upload de imagens personalizadas
 
 ## 🐛 Reportar Bugs
 
-Encontraste um bug? Abre uma issue no GitHub!
+Encontraste um bug? [Abre uma issue no GitHub](https://github.com/msousa200/Gerador-Receitas/issues)!
 
 ## 📄 Licença
 
@@ -171,7 +177,7 @@ MIT
 
 ## 👨‍💻 Autor
 
-Feito com ❤️ por [Teu Nome]
+Feito com ❤️ e 🍳 por [msousa200](https://github.com/msousa200)
 
 ---
 

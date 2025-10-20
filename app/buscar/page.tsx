@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Recipe } from "@/types/database";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function BuscarPage() {
   const [ingredients, setIngredients] = useState("");
@@ -9,6 +11,8 @@ export default function BuscarPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const [savingToFavorites, setSavingToFavorites] = useState(false);
+  const router = useRouter();
 
   const searchRecipes = async () => {
     if (!ingredients.trim()) {
@@ -43,6 +47,43 @@ export default function BuscarPage() {
       console.error(err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const addToFavorites = async (recipe: Recipe) => {
+    setSavingToFavorites(true);
+    try {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        alert("Precisas de fazer login para adicionar aos favoritos!");
+        router.push("/auth/login");
+        return;
+      }
+
+      const { error: insertError } = await supabase.from("user_recipes").insert({
+        user_id: user.id,
+        title: recipe.title,
+        description: recipe.description,
+        ingredients: recipe.ingredients,
+        instructions: recipe.instructions,
+        prep_time: recipe.prep_time,
+        cook_time: recipe.cook_time,
+        servings: recipe.servings,
+        image_url: recipe.image_url,
+        is_ai_generated: true,
+      });
+
+      if (insertError) throw insertError;
+
+      alert("✅ Receita adicionada aos favoritos!");
+      setSelectedRecipe(null);
+    } catch (err: any) {
+      console.error("Erro ao adicionar aos favoritos:", err);
+      alert("Erro ao adicionar aos favoritos: " + err.message);
+    } finally {
+      setSavingToFavorites(false);
     }
   };
 
@@ -247,13 +288,28 @@ export default function BuscarPage() {
             </div>
 
             <div className="modal-action">
-              <button className="btn btn-outline gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
-                Partilhar
+              <button 
+                className="btn btn-outline gap-2"
+                onClick={() => setSelectedRecipe(null)}
+              >
+                Fechar
               </button>
-              <button className="btn btn-accent gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                Guardar
+              <button 
+                className="btn btn-primary gap-2"
+                onClick={() => addToFavorites(selectedRecipe)}
+                disabled={savingToFavorites}
+              >
+                {savingToFavorites ? (
+                  <>
+                    <span className="loading loading-spinner loading-sm"></span>
+                    A guardar...
+                  </>
+                ) : (
+                  <>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    Adicionar aos Favoritos
+                  </>
+                )}
               </button>
             </div>
           </div>

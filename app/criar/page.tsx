@@ -183,12 +183,12 @@ export default function CriarPage() {
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Título *</span>
+                <span className="label-text font-semibold">Título *</span>
               </label>
               <input
                 type="text"
                 placeholder="Ex: Bacalhau à Brás"
-                className="input input-bordered"
+                className="input input-bordered input-lg focus:input-primary md:ml-4"
                 value={formData.title}
                 onChange={(e) =>
                   setFormData({ ...formData, title: e.target.value })
@@ -199,27 +199,25 @@ export default function CriarPage() {
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Descrição</span>
+                <span className="label-text font-semibold">Descrição</span>
               </label>
               <textarea
-                className="textarea textarea-bordered h-24"
+                className="textarea textarea-bordered textarea-lg focus:textarea-primary h-24 md:ml-4"
                 placeholder="Breve descrição da receita..."
                 value={formData.description}
                 onChange={(e) =>
                   setFormData({ ...formData, description: e.target.value })
                 }
               ></textarea>
-            </div>
-
-            <div className="grid grid-cols-3 gap-4">
+            </div>            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Prep (min)</span>
+                  <span className="label-text font-semibold">⏱️ Prep (min)</span>
                 </label>
                 <input
                   type="number"
                   placeholder="15"
-                  className="input input-bordered"
+                  className="input input-bordered focus:input-primary md:ml-4"
                   value={formData.prep_time}
                   onChange={(e) =>
                     setFormData({ ...formData, prep_time: e.target.value })
@@ -228,12 +226,12 @@ export default function CriarPage() {
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Cozedura (min)</span>
+                  <span className="label-text font-semibold">🔥 Cozedura (min)</span>
                 </label>
                 <input
                   type="number"
                   placeholder="30"
-                  className="input input-bordered"
+                  className="input input-bordered focus:input-secondary md:ml-4"
                   value={formData.cook_time}
                   onChange={(e) =>
                     setFormData({ ...formData, cook_time: e.target.value })
@@ -242,12 +240,12 @@ export default function CriarPage() {
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Doses</span>
+                  <span className="label-text font-semibold">👥 Doses</span>
                 </label>
                 <input
                   type="number"
                   placeholder="4"
-                  className="input input-bordered"
+                  className="input input-bordered focus:input-accent md:ml-4"
                   value={formData.servings}
                   onChange={(e) =>
                     setFormData({ ...formData, servings: e.target.value })
