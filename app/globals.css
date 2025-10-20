@@ -31,18 +31,17 @@ html {
   /* Scroll Animations */
   .scroll-animation {
     opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
   }
 
   .scroll-animation.animate-visible {
     opacity: 1;
+    transform: translateY(0);
   }
 
-  .animate-fade-in {
-    animation: fadeIn 1s ease-out forwards;
-  }
-
-  .animate-slide-up {
-    animation: slideUp 0.8s ease-out forwards;
+  .animate-fade-in.scroll-animation {
+    transform: translateY(20px);
   }
 
   .animate-slide-in-left {

@@ -13,35 +13,53 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   useEffect(() => {
-    // Adicionar animações de scroll a todos os elementos com data-animate
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-visible");
+    // Adicionar animações de scroll a todos os elementos
+    const setupAnimations = () => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("animate-visible");
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px"
+        }
+      );
+
+      // Esperar um pouco para garantir que o DOM está pronto
+      setTimeout(() => {
+        // Observar todos os cards, sections, e elementos principais
+        const animateElements = document.querySelectorAll(
+          '.card, section, .hero, .stats, .modal-box, .form-control, .alert'
+        );
+        
+        animateElements.forEach((el) => {
+          if (!el.classList.contains('scroll-animation')) {
+            el.classList.add('scroll-animation', 'animate-slide-up');
+            observer.observe(el);
           }
         });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -80px 0px"
-      }
-    );
+      }, 100);
 
-    // Observar todos os cards, sections, e elementos principais
-    const animateElements = document.querySelectorAll(
-      '.card, section, .hero, .stats, .modal, .form-control, .alert'
-    );
-    
-    animateElements.forEach((el) => {
-      el.classList.add('scroll-animation', 'animate-slide-up');
-      observer.observe(el);
-    });
+      return observer;
+    };
+
+    const observer = setupAnimations();
+
+    // Re-executar quando a página muda (navegação cliente)
+    const handleRouteChange = () => {
+      setTimeout(setupAnimations, 100);
+    };
+
+    window.addEventListener('popstate', handleRouteChange);
 
     return () => {
-      animateElements.forEach((el) => observer.unobserve(el));
+      window.removeEventListener('popstate', handleRouteChange);
     };
-  }, []);
+  }, [children]);
 
   return (
     <html lang="pt" data-theme="light">
