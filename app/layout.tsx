@@ -37,7 +37,10 @@ export default function RootLayout({
         );
         
         animateElements.forEach((el) => {
-          if (!el.classList.contains('scroll-animation')) {
+          // Não adicionar animação ao hero que já tem animate-fade-in
+          const hasCustomAnimation = el.classList.contains('animate-fade-in');
+          
+          if (!el.classList.contains('scroll-animation') && !hasCustomAnimation) {
             el.classList.add('scroll-animation', 'animate-slide-up');
             observer.observe(el);
           }
