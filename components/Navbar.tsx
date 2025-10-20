@@ -11,6 +11,7 @@ export default function Navbar() {
   const [theme, setTheme] = useState("light");
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     checkUser();
@@ -56,11 +57,24 @@ export default function Navbar() {
     document.documentElement.setAttribute("data-theme", newTheme);
   };
 
+  const closeMenu = () => {
+    setMenuOpen(false);
+    // Remove focus do dropdown para fechar
+    const elem = document.activeElement as HTMLElement;
+    if (elem) {
+      elem.blur();
+    }
+  };
+
   return (
     <div className="navbar bg-base-100/80 backdrop-blur-lg shadow-xl sticky top-0 z-50 border-b border-base-300">
       <div className="navbar-start">
         <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden btn-circle">
+          <label 
+            tabIndex={0} 
+            className="btn btn-ghost lg:hidden btn-circle"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -81,22 +95,38 @@ export default function Navbar() {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-2xl bg-base-100 rounded-box w-64 border border-base-300"
           >
             <li>
-              <Link href="/random" className={pathname === "/random" ? "active bg-primary text-primary-content" : ""}>
+              <Link 
+                href="/random" 
+                className={pathname === "/random" ? "active bg-primary text-primary-content" : ""}
+                onClick={closeMenu}
+              >
                 🎲 Aleatória
               </Link>
             </li>
             <li>
-              <Link href="/buscar" className={pathname === "/buscar" ? "active bg-primary text-primary-content" : ""}>
+              <Link 
+                href="/buscar" 
+                className={pathname === "/buscar" ? "active bg-primary text-primary-content" : ""}
+                onClick={closeMenu}
+              >
                 🔍 Buscar
               </Link>
             </li>
             <li>
-              <Link href="/favoritos" className={pathname === "/favoritos" ? "active bg-primary text-primary-content" : ""}>
+              <Link 
+                href="/favoritos" 
+                className={pathname === "/favoritos" ? "active bg-primary text-primary-content" : ""}
+                onClick={closeMenu}
+              >
                 ⭐ Favoritos
               </Link>
             </li>
             <li>
-              <Link href="/criar" className={pathname === "/criar" ? "active bg-primary text-primary-content" : ""}>
+              <Link 
+                href="/criar" 
+                className={pathname === "/criar" ? "active bg-primary text-primary-content" : ""}
+                onClick={closeMenu}
+              >
                 ➕ Criar
               </Link>
             </li>

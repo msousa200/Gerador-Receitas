@@ -5,7 +5,7 @@ export default function HomePage() {
     <div className="min-h-screen">
       {/* Hero Section with Background Image */}
       <div 
-        className="hero min-h-[70vh]" 
+        className="hero min-h-[70vh] animate-fade-in" 
         style={{
           backgroundImage: "url(https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=2070&auto=format&fit=crop)"
         }}
@@ -38,7 +38,7 @@ export default function HomePage() {
       {/* Features Section with Beautiful Cards */}
       <section className="py-16 px-4 bg-gradient-to-b from-base-100 to-base-200">
         <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-10">
+          <div className="text-center mb-10 animate-slide-up">
             <h2 className="text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               Funcionalidades Incríveis
             </h2>
@@ -47,7 +47,7 @@ export default function HomePage() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {/* Random Recipe Card */}
-            <div className="card bg-base-100 shadow-xl hover:shadow-primary/30 transition-all duration-300 hover:-translate-y-1">
+            <div className="card bg-base-100 shadow-xl hover:shadow-primary/30 transition-all duration-300 hover:-translate-y-1 animate-slide-up delay-100">
               <figure className="px-6 pt-6">
                 <div className="rounded-full bg-gradient-to-br from-primary to-secondary p-3">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-content" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
@@ -68,7 +68,7 @@ export default function HomePage() {
             </div>
 
             {/* Search by Ingredients Card */}
-            <div className="card bg-base-100 shadow-xl hover:shadow-secondary/30 transition-all duration-300 hover:-translate-y-1">
+            <div className="card bg-base-100 shadow-xl hover:shadow-secondary/30 transition-all duration-300 hover:-translate-y-1 animate-slide-up delay-200">
               <figure className="px-6 pt-6">
                 <div className="rounded-full bg-gradient-to-br from-secondary to-accent p-3">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-secondary-content" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
@@ -89,7 +89,7 @@ export default function HomePage() {
             </div>
 
             {/* Favorites Card */}
-            <div className="card bg-base-100 shadow-xl hover:shadow-accent/30 transition-all duration-300 hover:-translate-y-1">
+            <div className="card bg-base-100 shadow-xl hover:shadow-accent/30 transition-all duration-300 hover:-translate-y-1 animate-slide-up delay-300">
               <figure className="px-6 pt-6">
                 <div className="rounded-full bg-gradient-to-br from-accent to-error p-3">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-accent-content" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -115,7 +115,7 @@ export default function HomePage() {
       {/* Stats Section */}
       <section className="py-12 bg-base-100">
         <div className="container mx-auto px-4">
-          <div className="flex justify-center overflow-x-auto">
+          <div className="flex justify-center overflow-x-auto animate-slide-up delay-400">
             <div className="stats stats-horizontal shadow-2xl bg-base-200">
               <div className="stat place-items-center py-2 px-3 md:py-4 md:px-6">
                 <div className="stat-title text-[10px] md:text-xs">Receitas Geradas</div>
@@ -139,7 +139,7 @@ export default function HomePage() {
 
       {/* CTA Section with Gradient */}
       <section className="py-16 bg-gradient-to-br from-primary via-secondary to-accent">
-        <div className="container mx-auto text-center px-4">
+        <div className="container mx-auto text-center px-4 animate-fade-in">
           <div className="max-w-3xl mx-auto text-primary-content">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 drop-shadow-lg">
               Pronto para Começar?
