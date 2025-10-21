@@ -47,26 +47,52 @@ async function generateSingleRecipe(
     
     Não incluas nenhum texto extra, apenas o JSON válido.`;
   } else if (type === "search" && ingredients) {
-    const recipeType = recipeTypes[index! % recipeTypes.length];
+    // Lista de variações para garantir diversidade
+    const variations = [
+      "tradicional",
+      "moderna",
+      "ao forno",
+      "grelhada",
+      "em molho",
+      "com legumes",
+      "gratinado",
+      "em salada"
+    ];
     
-    prompt = `Gera uma receita portuguesa ÚNICA usando: ${ingredients}. Tipo sugerido: ${recipeType}.
+    const variation = variations[index! % variations.length];
     
-    IMPORTANTE: Tem que ser DIFERENTE das outras. Usa os ingredientes: ${ingredients} de forma CRIATIVA.
-    
-    Responde APENAS em formato JSON válido com a seguinte estrutura:
-    {
-      "title": "nome criativo e único da receita",
-      "description": "descrição apetitosa com os ingredientes ${ingredients}",
-      "category": "categoria (bacalhau/frango/porco/peixe/marisco/sopa/doce)",
-      "ingredients": ["ingrediente com quantidade 1 (inclui ${ingredients})", "ingrediente 2", ...],
-      "instructions": ["passo detalhado 1", "passo detalhado 2", ...],
-      "prep_time": tempo de preparação em minutos (número),
-      "cook_time": tempo de cozedura em minutos (número),
-      "servings": número de doses (número)
-    }
-    
-    Certifica-te que ${ingredients} está nos ingredientes principais.
-    Não incluas nenhum texto extra, apenas o JSON válido.`;
+    prompt = `Cria a receita número ${index! + 1} DIFERENTE das anteriores, usando principalmente: ${ingredients}.
+
+IMPORTANTE: 
+- Esta é a receita #${index! + 1} - TEM que ser DIFERENTE das outras
+- Usa os ingredientes "${ingredients}" como base
+- Variação sugerida: ${variation}
+- Cria receitas TRADICIONAIS e POPULARES conhecidas
+- VARIA o nome e preparação para não repetir
+
+Exemplos de receitas DIFERENTES com bacalhau e natas:
+1. Bacalhau com Natas (tradicional)
+2. Bacalhau à Gomes de Sá
+3. Bacalhau Gratinado com Natas
+4. Bacalhau à Brás
+5. Pataniscas de Bacalhau com Molho de Natas
+6. Bacalhau Espiritual
+7. Açorda de Bacalhau
+8. Salada de Bacalhau
+
+Responde APENAS em formato JSON válido:
+{
+  "title": "nome DIFERENTE e TRADICIONAL da receita #${index! + 1}",
+  "description": "descrição apetitosa e realista",
+  "category": "categoria (bacalhau/frango/porco/peixe/marisco/sopa/doce/massa)",
+  "ingredients": ["ingrediente com quantidade 1 (deve incluir ${ingredients})", "ingrediente 2", ...],
+  "instructions": ["passo detalhado 1", "passo detalhado 2", ...],
+  "prep_time": tempo de preparação em minutos (número),
+  "cook_time": tempo de cozedura em minutos (número),
+  "servings": número de doses (número)
+}
+
+Não incluas nenhum texto extra, apenas o JSON válido.`;
   }
 
   const chatCompletion = await groq.chat.completions.create({
@@ -74,7 +100,7 @@ async function generateSingleRecipe(
       {
         role: "system",
         content:
-          "És um chef criativo especializado em culinária portuguesa tradicional e moderna. Geras SEMPRE receitas ÚNICAS e DIFERENTES. Nunca repetes nomes ou ideias. Responde apenas com JSON válido.",
+          "És um chef profissional que conhece receitas TRADICIONAIS e POPULARES. Crias receitas CONHECIDAS e REALISTAS, não inventas combinações estranhas. Responde sempre com JSON válido.",
       },
       {
         role: "user",
@@ -82,9 +108,9 @@ async function generateSingleRecipe(
       },
     ],
     model: "llama-3.3-70b-versatile",
-    temperature: 1.2, // Aumentado para mais criatividade
+    temperature: 0.7, // Reduzido para mais consistência e tradicionalidade
     max_tokens: 2048,
-    top_p: 0.95,
+    top_p: 0.85, // Reduzido para respostas mais previsíveis
   });
 
   let response = chatCompletion.choices[0]?.message?.content || "";
@@ -94,53 +120,8 @@ async function generateSingleRecipe(
   
   const recipe = JSON.parse(response);
   
-  // Imagens de alta qualidade fixas do Unsplash organizadas por categoria
-  const categoryImages: Record<string, string[]> = {
-    'bacalhau': [
-      'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=400&h=300&fit=crop',
-    ],
-    'frango': [
-      'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=400&h=300&fit=crop',
-    ],
-    'porco': [
-      'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=400&h=300&fit=crop',
-    ],
-    'peixe': [
-      'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?w=400&h=300&fit=crop',
-    ],
-    'marisco': [
-      'https://images.unsplash.com/photo-1559737558-2f5a552caaf5?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1615750185825-9c5c7fa8e8d1?w=400&h=300&fit=crop',
-    ],
-    'sopa': [
-      'https://images.unsplash.com/photo-1547592180-85f173990554?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1588566565463-180a5b2090d2?w=400&h=300&fit=crop',
-    ],
-    'doce': [
-      'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=400&h=300&fit=crop',
-    ],
-    'carne': [
-      'https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1615750185825-9c5c7fa8e8d1?w=400&h=300&fit=crop',
-    ],
-  };
-  
-  // Imagem padrão para qualquer categoria
-  const defaultImages = [
-    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=300&fit=crop',
-  ];
-  
-  const category = recipe.category?.toLowerCase() || 'food';
-  const images = categoryImages[category] || defaultImages;
-  recipe.image_url = images[index! % images.length];
+  // Não adicionar imagens aqui - deixar o frontend buscar imagens específicas
+  // baseadas no nome da receita através do Unsplash
   recipe.is_ai_generated = true;
 
   return recipe;

@@ -127,12 +127,10 @@ export default function RandomPage() {
                 className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer"
                 onClick={() => setSelectedRecipe(recipe)}
               >
-                <figure className="relative h-48 overflow-hidden">
-                  <img
-                    src={recipe.image_url || `https://source.unsplash.com/400x300/?portuguese,food,${index}`}
-                    alt={recipe.title}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                  />
+                <figure className="relative h-48 overflow-hidden bg-gradient-to-br from-primary/20 to-secondary/20">
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="text-6xl">🍽️</div>
+                  </div>
                   <div className="absolute top-2 right-2">
                     <div className="badge badge-primary badge-sm">🤖 IA</div>
                   </div>
@@ -173,12 +171,8 @@ export default function RandomPage() {
               >✕</button>
             </form>
             
-            <div className="mb-4">
-              <img
-                src={selectedRecipe.image_url || 'https://source.unsplash.com/800x400/?portuguese,food'}
-                alt={selectedRecipe.title}
-                className="w-full h-64 object-cover rounded-lg"
-              />
+            <div className="mb-4 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-lg h-64 flex items-center justify-center">
+              <div className="text-8xl">🍽️</div>
             </div>
 
             <div className="flex items-center gap-2 mb-2">

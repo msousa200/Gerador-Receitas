@@ -238,7 +238,7 @@ export default function HomePage() {
         <div className="border-t border-base-content/10">
           <div className="container mx-auto px-4 py-4 text-center">
             <p className="text-sm opacity-60">
-              © 2025 Gerador de Receitas. Todos os direitos reservados.
+              © {new Date().getFullYear()} Gerador de Receitas. Todos os direitos reservados.
             </p>
           </div>
         </div>
